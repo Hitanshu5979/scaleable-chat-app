@@ -1,8 +1,15 @@
 import { Server } from "socket.io";
 import Redis from "ioredis";
 
-const redisUri =
-  "rediss://default:AVNS_nYterha9KJOO4Ukwtp_@redis-c5f4648-hitanshusamantaray-e017.a.aivencloud.com:25230";
+import { config } from "../config/config";
+const { redisUri } = config;
+
+if (!redisUri) {
+  console.error(
+    "REDIS_CONNECTION_STRING is not defined in the environment variables."
+  );
+  process.exit(1); // You may handle this error differently based on your application's requirements
+}
 
 const pub = new Redis(redisUri);
 const sub = new Redis(redisUri);
